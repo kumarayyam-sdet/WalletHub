@@ -1,17 +1,23 @@
 package page.wallethub;
 
 
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
-import utilities.BasePage;
+import page.common.PageHelper;
+import stepdefinitions.common.Hooks;
+
 
 /**
  *
  */
-public class WallethubLoginPage extends BasePage {
+public class WallethubLoginPage {
 
-    private static final String PAGE_URL = "https://wallethub.com/join/login";
+	WebDriver driver;
+	PageHelper ph=new PageHelper();
+    
 
     @FindBy(css ="[ng-model=\"fields.email\"]")
     private WebElement userInput;
@@ -22,27 +28,31 @@ public class WallethubLoginPage extends BasePage {
     @FindBy(css = "[data-hm-tap=\"doLogin($event);\"]")
     private WebElement loginBtn;
 
-    @FindBy(css = "[class='cover-photo cover-photo-default']")
-    WebElement coverPhoto;
+    @FindBy(xpath = "//*//main//button[contains(text(),\"Edit Profile\")]")
+    WebElement editProfile;
 
     public WallethubLoginPage() {
-        super(true);
+    	driver=Hooks.driver;
+        PageFactory.initElements(driver, this);
     }
 
-    @Override
-    protected void openPage() {
-        getDriver().get(PAGE_URL);
-    }
-
-    @Override
+    
+    
+    
     public boolean isPageOpened() {
         return userInput.isDisplayed();
     }
+    
+    public void waitForOpen() {
+    	ph.elementVisiblityDisplayCheck(userInput);
+    }
 
-    public void login(String login, String pass) {
+    public void login(String url,String login, String pass) {
+    	ph.openPage(url);
+    	waitForOpen();
         userInput.sendKeys(login);
         passInput.sendKeys(pass);
         loginBtn.click();
-        waitForElementVisible(coverPhoto);
+        ph.waitForElementVisible(editProfile);
     }
 }

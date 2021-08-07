@@ -1,65 +1,74 @@
 package page.facebook;
 
-
-import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
-
-import utilities.BasePage;
-
-import java.util.Set;
+import org.openqa.selenium.support.PageFactory;
+import page.common.PageHelper;
+import stepdefinitions.common.Hooks;
 
 /**
  *
  */
-public class FacebookPage extends BasePage {
+public class FacebookPage  {
+	
+	WebDriver driver;
+	PageHelper ph=new PageHelper();
+	public FacebookPage() {
+        driver=Hooks.driver;
+        PageFactory.initElements(driver, this);
+    }
 
-    private static final String PAGE_URL = "https://www.facebook.com";
 
-    @FindBy(css = "input[type='email']")
+    
+
+    @FindBy(xpath = "//*[@id='email']")
     private WebElement emailInput;
 
-    @FindBy(css = "input[type='password']")
+    @FindBy(xpath = "//*[@id='pass']")
     private WebElement passInput;
 
-    @FindBy(css = "input[value='Log In']")
+    @FindBy(xpath = "//*[@data-testid='royal_login_button']")
     private WebElement loginBtn;
 
-    @FindBy(css = "textarea[title*='on your mind']")
+    @FindBy(xpath = "//*/span[contains(text(),\"What's on your mind\")]")
     private WebElement postInput;
+    
+    @FindBy(xpath="//*/div[contains(@aria-label,'on your mind')]")
+    private WebElement messageInput;
 
-    @FindBy(css = "[data-testid='react-composer-post-button'] > span")
+    @FindBy(xpath = "//*/span[(text()='Post')]")
     private WebElement postBtn;
 
-    public FacebookPage() {
-        super(true);
-    }
+    
+    
+    
 
-    @Override
-    protected void openPage() {
-        getDriver().get(PAGE_URL);
-    }
-
-    @Override
+    
     public boolean isPageOpened() {
         return emailInput.isDisplayed();
     }
+    
+    public void waitForOpen() {
+    	ph.elementVisiblityDisplayCheck(emailInput);
+    }
 
-    public void fbLogin(String login, String pass) {
+    public void fbLogin(String url,String login, String pass) {
+    	ph.openPage(url);
+    	waitForOpen();
         emailInput.sendKeys(login);
         passInput.sendKeys(pass);
         loginBtn.click();
     }
 
     public void postNewStatus(String msg) {
-        waitForElementVisible(postInput);
-        postInput.sendKeys(msg);
-        waitForElementVisible(postBtn);
-        Actions builder = new Actions(getDriver());
+    	ph.elementVisiblityDisplayCheck(postInput);
+    	postInput.click();
+    	ph.elementVisiblityDisplayCheck(messageInput);
+    	messageInput.sendKeys(msg);
+        ph.waitForElementVisible(postBtn);
+        Actions builder = new Actions(driver);
         builder.moveToElement(postBtn).click().perform();
-        postBtn.click();
-        waitForElementIsNotVisible(postBtn);
-        waitForElementVisible(getDriver().findElement(By.xpath("//div/p[contains(text(),'" + msg + "')]")));
-    }
+   }
 }
