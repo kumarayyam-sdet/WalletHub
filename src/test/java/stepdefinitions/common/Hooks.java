@@ -58,7 +58,7 @@ public class Hooks {
 			byte[] SrcFile = scrShot.getScreenshotAs(OutputType.BYTES);
 			scenario.embed(SrcFile, "image/png");
 		}
-		//driver.quit();
+		driver.quit();
 	}
 	
 	public static void attachScreenshot() {
