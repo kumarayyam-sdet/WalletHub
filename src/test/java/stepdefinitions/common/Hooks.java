@@ -29,7 +29,8 @@ public class Hooks {
 
 	@Before(value = "@ui", order = 1)
 	public void beforeUIScenario(Scenario scenario) {
-		driver = new Driver().instantiateDriver(Browser.CHROME);
+		String browser=configuration.getTestproperty().get("browser").toString();
+		driver = new Driver().instantiateDriver(Browser.getByName(browser));
 		this.scenario=scenario;
 
 	}
@@ -41,25 +42,9 @@ public class Hooks {
 			byte[] SrcFile = scrShot.getScreenshotAs(OutputType.BYTES);
 			scenario.embed(SrcFile, "image/png");
 		}
-		//driver.quit();
-	}
-	
-	@Before(value = "@uiChromeVPN", order = 2)
-	public void beforeUiChromeVPNUIScenario(Scenario scenario) {
-		driver = new Driver().instantiateDriver(Browser.CHROME);
-		this.scenario=scenario;
-
-	}
-
-	@After(value = "@uiChromeVPN", order = 2)
-	public void afterUiChromeVPN(Scenario scenario) {
-		if (scenario.isFailed()) {
-			TakesScreenshot scrShot = ((TakesScreenshot) driver);
-			byte[] SrcFile = scrShot.getScreenshotAs(OutputType.BYTES);
-			scenario.embed(SrcFile, "image/png");
-		}
 		driver.quit();
 	}
+
 	
 	public static void attachScreenshot() {
 		TakesScreenshot scrShot = ((TakesScreenshot) driver);

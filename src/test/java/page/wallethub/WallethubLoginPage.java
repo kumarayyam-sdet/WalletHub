@@ -17,7 +17,7 @@ public class WallethubLoginPage {
 
 	WebDriver driver;
 	PageHelper ph=new PageHelper();
-    
+    int pagewaittime;
 
     @FindBy(css ="[ng-model=\"fields.email\"]")
     private WebElement userInput;
@@ -34,6 +34,7 @@ public class WallethubLoginPage {
     public WallethubLoginPage() {
     	driver=Hooks.driver;
         PageFactory.initElements(driver, this);
+        pagewaittime= Integer.parseInt(Hooks.configuration.getTestproperty().get("wallethub.waittime").toString());
     }
 
     
@@ -53,6 +54,6 @@ public class WallethubLoginPage {
         userInput.sendKeys(login);
         passInput.sendKeys(pass);
         loginBtn.click();
-        ph.waitForElementVisible(editProfile);
+        ph.waitForElementVisible(editProfile,pagewaittime);
     }
 }

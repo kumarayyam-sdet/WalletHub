@@ -15,9 +15,11 @@ public class FacebookPage  {
 	
 	WebDriver driver;
 	PageHelper ph=new PageHelper();
+	int pagewaittime;
 	public FacebookPage() {
         driver=Hooks.driver;
         PageFactory.initElements(driver, this);
+        pagewaittime= Integer.parseInt(Hooks.configuration.getTestproperty().get("facebook.waittime").toString());
     }
 
 
@@ -67,7 +69,7 @@ public class FacebookPage  {
     	postInput.click();
     	ph.elementVisiblityDisplayCheck(messageInput);
     	messageInput.sendKeys(msg);
-        ph.waitForElementVisible(postBtn);
+        ph.waitForElementVisible(postBtn,pagewaittime);
         Actions builder = new Actions(driver);
         builder.moveToElement(postBtn).click().perform();
    }

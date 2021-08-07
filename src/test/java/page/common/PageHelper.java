@@ -19,7 +19,7 @@ import utilities.TimeUtils;
 public class PageHelper {
 	
 	
-	public static final int WAIT_FOR_PAGE_LOAD_IN_SECONDS = 120;
+	public static final int WAIT_FOR_PAGE_LOAD_IN_SECONDS = 30;
 	
 	public PageHelper() {
 		this.driver = Hooks.driver;
@@ -108,6 +108,11 @@ public class PageHelper {
 
 	    public void waitForElementVisible(WebElement element) {
 	        WebDriverWait wait = new WebDriverWait(driver, WAIT_FOR_PAGE_LOAD_IN_SECONDS);
+	        wait.until(ExpectedConditions.visibilityOf(element));
+	    }
+	    
+	    public void waitForElementVisible(WebElement element,int seconds) {
+	        WebDriverWait wait = new WebDriverWait(driver, seconds);
 	        wait.until(ExpectedConditions.visibilityOf(element));
 	    }
 
