@@ -21,6 +21,12 @@ wallethub.password=
 
 ## How to Execute the Tests
 
+### Acceptance Criteria
+
+Assignment 1 - 
+
+Assignment 2 - 
+
 ### Using build.gradle
 
 
