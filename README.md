@@ -2,6 +2,10 @@
 
 This library has been created and designed to test Facebook and WalletHub
 
+## Components
+
+#### Selenium - 3 + Junit 4 + Cucumber 1 + Gradle
+
 ## Configurations
 
 ### Update Credentials.properties (inside WalletHub/src/test/resources/properties/)
