@@ -6,6 +6,12 @@ This library has been created and designed to test Facebook and WalletHub
 
 #### Selenium - 3 + Junit 4 + Cucumber 1 + Gradle
 
+## Acceptance Criteria
+
+##### Assignment 1 - src/test/resources/features/facebook/Facebook-Post Status Message.feature
+
+##### Assignment 2 - src/test/resources/features/wallethub/Wallethub-Write Review.feature
+
 ## Configurations
 
 ### Update Credentials.properties (inside WalletHub/src/test/resources/properties/)
@@ -21,11 +27,6 @@ wallethub.password=
 
 ## How to Execute the Tests
 
-### Acceptance Criteria
-
-Assignment 1 - 
-
-Assignment 2 - 
 
 ### Using build.gradle
 
